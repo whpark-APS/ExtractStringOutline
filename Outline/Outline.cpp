@@ -1,4 +1,10 @@
-﻿#include "pch.h"
+﻿//=================================================================================================================================
+// 2023-02-21. PWH
+//
+// Outline() : 높이 1인 글자의 외곽선을 뽑아내는 함수
+//
+
+#include "pch.h"
 #include "Outline.h"
 
 #include "opencv2/opencv.hpp"
@@ -32,9 +38,9 @@ xLines Outline(CString const& text, LOGFONT const& lf, bool bOutline, bool bHorz
 		dc.SelectStockObject(WHITE_BRUSH);
 		dc.Rectangle(rect);
 		CFont font;
-		font.CreateFontIndirect(&lf);
-		//LOGFONT logfont{};
-		//logfont.lfQuality = NONANTIALIASED_QUALITY;	// 안티얼라이어징 끄려면 이거 쓰면 됨
+		LOGFONT logfont{lf};
+		logfont.lfQuality = NONANTIALIASED_QUALITY;	// 안티얼라이어징 끄려면 이거 쓰면 됨
+		font.CreateFontIndirect(&logfont);
 		dc.SelectObject(&font);
 		dc.SetTextColor(RGB(0, 0, 0));
 		dc.SetBkMode(TRANSPARENT);
@@ -83,8 +89,8 @@ xLines Outline(CString const& text, LOGFONT const& lf, bool bOutline, bool bHorz
 	// Outline 뽑아내기
 	if (bOutline) {
 		std::vector<std::vector<cv::Point> > contours;
-		std::vector<cv::Vec4i> hierarchy;
-		cv::findContours(mat, contours, hierarchy, cv::RETR_LIST, cv::CHAIN_APPROX_SIMPLE);
+		//std::vector<cv::Vec4i> hierarchy;
+		cv::findContours(mat, contours, cv::RETR_LIST, cv::CHAIN_APPROX_SIMPLE);
 
 	#ifdef _DEBUG
 		// 그려보기.
@@ -99,11 +105,15 @@ xLines Outline(CString const& text, LOGFONT const& lf, bool bOutline, bool bHorz
 		for (auto const& contour : contours) {
 			lines.push_back({});
 			auto& line = lines.back();
+			if (contour.empty())
+				continue;
 			line.reserve(contour.size());
 			for (auto const& pt2i : contour) {
 				xPoint pt{ pt2i.x, pt2i.y };
 				line.push_back(pt);
 			}
+			auto pt = contour.front();
+			line.push_back(xPoint{ (double)pt.x, (double)pt.y });
 		}
 	}
 

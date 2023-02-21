@@ -94,14 +94,14 @@ BOOL COutlineDlg::OnInitDialog() {
 	// 초기 Font 설정
 	CFont font;
 	CString strFontName = _T("Segoe UI");
-	font.CreatePointFont(3000, strFontName);
+	font.CreatePointFont(2000, strFontName);
 	font.GetLogFont(&m_logfont);
 	SetDlgItemText(IDC_TEXT, _T("ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"));
 	SetDlgItemText(IDC_FONT_NAME, strFontName);
 	SetDlgItemInt(IDC_FONT_SIZE, -m_logfont.lfHeight);
 	CheckDlgButton(IDC_CHK_OUTLINE, 1);
 	CheckDlgButton(IDC_CHK_HORZ_HATCHING, 1);
-	SetDlgItemText(IDC_HORZ_HATCHING_STEP, _T("10"));
+	SetDlgItemInt(IDC_HORZ_HATCHING_STEP, 10);	// Hatching 간격
 
 	return TRUE;  // return TRUE  unless you set the focus to a control
 }
