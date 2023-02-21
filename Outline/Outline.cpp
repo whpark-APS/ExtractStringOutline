@@ -103,10 +103,13 @@ xLines Outline(CString const& text, LOGFONT const& lf, bool bOutline, bool bHorz
 		// to line, and calc boundary
 		//lines.reserve(contours.size());
 		for (auto const& contour : contours) {
-			lines.push_back({});
-			auto& line = lines.back();
 			if (contour.empty())
 				continue;
+			// 최외각 라인 삭제
+			if (contour.front().y <= 1)
+				continue;
+			lines.push_back({});
+			auto& line = lines.back();
 			line.reserve(contour.size());
 			for (auto const& pt2i : contour) {
 				xPoint pt{ pt2i.x, pt2i.y };
