@@ -1,13 +1,15 @@
 #include "pch.h"
+#include <fstream>
 
 #include "ExtractStringOutline.h"
 
-#include "opencv2/opencv.hpp"
+//#include "opencv2/opencv.hpp"
 
 namespace ExtractStringOutline {
 
-	cliext::vector<xLine> xExtractStringOutline::ExtractStringOutline(String^ str) {
-
+	bool xExtractStringOutline::ExtractStringOutline(bool b) {
+		//cliext::vector<xLine^>^ lst = gcnew cliext::vector<xLine^>();
+		return true;
 	}
 
 }

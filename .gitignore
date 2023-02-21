@@ -12,8 +12,10 @@
 
 # Build results
 [Dd]ebug/
+[Dd]ebug2022/
 [Dd]ebugPublic/
 [Rr]elease/
+[Rr]elease2022/
 [Rr]eleases/
 x64/
 x86/
